@@ -1,3 +1,5 @@
+var intervalId; // Declare intervalId globally to access it in both startTimer and stopTimer functions
+
 function startTimer() {
     var inputMinutes = parseInt(document.getElementById('minutes').value);
     var inputSeconds = parseInt(document.getElementById('seconds').value);
@@ -10,7 +12,7 @@ function startTimer() {
     var totalSeconds = inputMinutes * 60 + inputSeconds;
     var display = document.querySelector('#timer');
 
-    var intervalId = setInterval(function () {
+    intervalId = setInterval(function () {
         var minutes = parseInt(totalSeconds / 60, 10);
         var seconds = parseInt(totalSeconds % 60, 10);
 
@@ -28,4 +30,8 @@ function startTimer() {
             startTimer(); // Start the timer again
         }
     }, 1000);
+}
+
+function stopTimer() {
+    clearInterval(intervalId);
 }
