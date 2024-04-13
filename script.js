@@ -7,28 +7,25 @@ function startTimer() {
         return;
     }
 
-    var timer = inputMinutes * 60 + inputSeconds,
-        display = document.querySelector('#timer');
+    var totalSeconds = inputMinutes * 60 + inputSeconds;
+    var display = document.querySelector('#timer');
 
     var intervalId = setInterval(function () {
-        var minutes = parseInt(timer / 60, 10);
-        var seconds = parseInt(timer % 60, 10);
+        var minutes = parseInt(totalSeconds / 60, 10);
+        var seconds = parseInt(totalSeconds % 60, 10);
 
         var displayMinutes = minutes < 10 ? "0" + minutes : minutes;
         var displaySeconds = seconds < 10 ? "0" + seconds : seconds;
 
         display.textContent = displayMinutes + ":" + displaySeconds;
 
-        if (--timer < 0) {
-            timer = inputMinutes * 60 + inputSeconds;
+        if (--totalSeconds < 0) {
+            clearInterval(intervalId);
+            totalSeconds = inputMinutes * 60 + inputSeconds;
             // Play a sound
             var audio = document.getElementById("audio");
             audio.play();
+            startTimer(); // Start the timer again
         }
     }, 1000);
-
-    // Stop the timer after the specified duration
-    setTimeout(function() {
-        clearInterval(intervalId);
-    }, timer * 1000); // Convert seconds to milliseconds
 }
